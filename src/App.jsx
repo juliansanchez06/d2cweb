@@ -38,6 +38,17 @@ const GS = `
   .btn:active{transform:translateY(0);}
   .grain:before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");}
+  @media(max-width:640px){
+    .nav-links{gap:14px!important;}
+    .nav-text{display:none!important;}
+    .hero-pad{padding:44px 18px 32px!important;}
+    .sec-pad{padding:32px 18px!important;}
+    .viaje-pad{padding:48px 18px!important;}
+    .foot-pad{padding:36px 18px 26px!important;}
+    .head-pad{padding:11px 16px!important;}
+    .cart-w{width:100vw!important;}
+    .co-modal{border-radius:16px 16px 0 0!important;max-height:96vh!important;align-self:flex-end!important;}
+  }
 `
 
 const fmt = n => '$' + Math.round(n).toLocaleString('es-AR')
@@ -97,7 +108,7 @@ function ColorNote({ inline }) {
 function Header({ cartCount, onCart }) {
   return (
     <header style={{position:'sticky',top:0,zIndex:50,background:'rgba(242,237,232,.85)',backdropFilter:'blur(12px)',borderBottom:`1px solid ${C.line}`}}>
-      <div style={{maxWidth:1100,margin:'0 auto',padding:'12px 24px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+      <div className="head-pad" style={{maxWidth:1100,margin:'0 auto',padding:'12px 24px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <a href="#inicio" style={{display:'flex',alignItems:'center',gap:12,textDecoration:'none'}}>
           <Logo size={42}/>
           <div>
@@ -105,11 +116,11 @@ function Header({ cartCount, onCart }) {
             <div style={{fontSize:9.5,color:C.faint,letterSpacing:'.14em',textTransform:'uppercase'}}>De nuestro campo a tu mesa</div>
           </div>
         </a>
-        <nav style={{display:'flex',alignItems:'center',gap:28}}>
-          <a href="#cortes" style={{fontSize:13,color:C.ink2,textDecoration:'none',fontWeight:500}} className="navlink">Cortes</a>
-          <a href="#viaje" style={{fontSize:13,color:C.ink2,textDecoration:'none',fontWeight:500}}>El viaje</a>
+        <nav className="nav-links" style={{display:'flex',alignItems:'center',gap:28}}>
+          <a href="#cortes" className="nav-text" style={{fontSize:13,color:C.ink2,textDecoration:'none',fontWeight:500}}>Cortes</a>
+          <a href="#viaje" className="nav-text" style={{fontSize:13,color:C.ink2,textDecoration:'none',fontWeight:500}}>El viaje</a>
           <button onClick={onCart} className="btn" style={{position:'relative',background:C.wine,color:C.cream,border:'none',borderRadius:30,padding:'9px 20px',fontSize:13,fontWeight:600,display:'flex',alignItems:'center',gap:8}}>
-            🛒 Pedido
+            🛒 <span className="nav-text">Pedido</span>
             {cartCount>0 && <span style={{background:C.gold,color:C.ink,borderRadius:20,minWidth:20,height:20,display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,padding:'0 5px'}}>{cartCount}</span>}
           </button>
         </nav>
@@ -121,7 +132,7 @@ function Header({ cartCount, onCart }) {
 // ─── HERO ───────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section id="inicio" style={{maxWidth:1100,margin:'0 auto',padding:'70px 24px 50px',position:'relative'}}>
+    <section id="inicio" className="hero-pad" style={{maxWidth:1100,margin:'0 auto',padding:'70px 24px 50px',position:'relative'}}>
       <div className="fade-up" style={{textAlign:'center',position:'relative',zIndex:2}}>
         <div style={{display:'inline-flex',alignItems:'center',gap:8,background:C.greenBg,border:`1px solid #cdd9c0`,borderRadius:30,padding:'6px 16px',marginBottom:24}}>
           <span style={{width:7,height:7,borderRadius:10,background:C.green,animation:'pulse 2s infinite'}}/>
@@ -178,7 +189,7 @@ function CutCard({ cut, onAdd, idx }) {
 // ─── SECCIÓN CORTES ─────────────────────────────────────────────
 function Catalog({ stock, loading, onAdd }) {
   return (
-    <section id="cortes" style={{maxWidth:1100,margin:'0 auto',padding:'40px 24px'}}>
+    <section id="cortes" className="sec-pad" style={{maxWidth:1100,margin:'0 auto',padding:'40px 24px'}}>
       <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:8,flexWrap:'wrap',gap:12}}>
         <div>
           <div style={{fontSize:12,fontWeight:700,color:C.gold,letterSpacing:'.14em',textTransform:'uppercase',marginBottom:8}}>Stock en vivo</div>
@@ -210,7 +221,7 @@ function Catalog({ stock, loading, onAdd }) {
 // ─── SECCIÓN EL VIAJE ───────────────────────────────────────────
 function Viaje() {
   return (
-    <section id="viaje" style={{background:C.wine,padding:'70px 24px',marginTop:40}}>
+    <section id="viaje" className="viaje-pad" style={{background:C.wine,padding:'70px 24px',marginTop:40}}>
       <div style={{maxWidth:1100,margin:'0 auto'}}>
         <div style={{textAlign:'center',marginBottom:48}}>
           <div style={{fontSize:12,fontWeight:700,color:C.gold,letterSpacing:'.14em',textTransform:'uppercase',marginBottom:10}}>De productor a consumidor</div>
@@ -245,7 +256,7 @@ function Cart({ open, items, onClose, onQty, onRemove, onCheckout }) {
   return (
     <>
       <div onClick={onClose} style={{position:'fixed',inset:0,background:'rgba(36,26,23,.4)',zIndex:90,backdropFilter:'blur(2px)'}}/>
-      <div style={{position:'fixed',top:0,right:0,bottom:0,width:'min(420px,100vw)',background:C.bg,zIndex:100,boxShadow:'-10px 0 40px rgba(36,26,23,.2)',display:'flex',flexDirection:'column',animation:'slideIn .3s cubic-bezier(.2,.7,.3,1)'}}>
+      <div className="cart-w" style={{position:'fixed',top:0,right:0,bottom:0,width:'min(420px,100vw)',background:C.bg,zIndex:100,boxShadow:'-10px 0 40px rgba(36,26,23,.2)',display:'flex',flexDirection:'column',animation:'slideIn .3s cubic-bezier(.2,.7,.3,1)'}}>
         <div style={{padding:'20px 22px',borderBottom:`1px solid ${C.line}`,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
           <h3 style={{fontFamily:'Fraunces,serif',fontSize:22,fontWeight:600,color:C.ink}}>Tu pedido</h3>
           <button onClick={onClose} className="btn" style={{background:'none',border:'none',fontSize:24,color:C.faint,cursor:'pointer',lineHeight:1}}>×</button>
@@ -342,7 +353,7 @@ function Checkout({ open, items, onClose, onConfirm }) {
 
   return (
     <div style={{position:'fixed',inset:0,background:'rgba(36,26,23,.5)',zIndex:200,display:'flex',alignItems:'center',justifyContent:'center',padding:16,backdropFilter:'blur(3px)'}}>
-      <div style={{background:C.bg,borderRadius:20,maxWidth:480,width:'100%',maxHeight:'92vh',overflowY:'auto',boxShadow:'0 30px 80px rgba(36,26,23,.3)'}}>
+      <div className="co-modal" style={{background:C.bg,borderRadius:20,maxWidth:480,width:'100%',maxHeight:'92vh',overflowY:'auto',boxShadow:'0 30px 80px rgba(36,26,23,.3)'}}>
         <div style={{padding:'20px 24px',borderBottom:`1px solid ${C.line}`,display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,background:C.bg,zIndex:2}}>
           <div style={{display:'flex',gap:6,alignItems:'center'}}>
             {[1,2,3].map(n=>(
@@ -430,7 +441,7 @@ function Checkout({ open, items, onClose, onConfirm }) {
 // ─── FOOTER ─────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer style={{background:C.ink,color:'rgba(252,250,247,.7)',padding:'48px 24px 32px',marginTop:0}}>
+    <footer className="foot-pad" style={{background:C.ink,color:'rgba(252,250,247,.7)',padding:'48px 24px 32px',marginTop:0}}>
       <div style={{maxWidth:1100,margin:'0 auto',display:'flex',flexWrap:'wrap',gap:40,justifyContent:'space-between'}}>
         <div style={{maxWidth:280}}>
           <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
